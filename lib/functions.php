@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Package functions
+ *
+ * @package Localbox
+ */
+
+/*
 function localbox_sync_all_users() {
   $localboxUsers = localbox_rest_request("GET", "identities");
   $elggUsers = get_user_entities_as_rows();
@@ -7,6 +14,7 @@ function localbox_sync_all_users() {
   // Create new users
   foreach (array_udiff($elggUsers, $localboxUsers, 'localbox_compare_users') as $user) {
     localbox_create_user($user);
+    exit();
   }
 
   // Update existing users on change
@@ -80,6 +88,6 @@ function localbox_rest_request($method = "GET", $url, $content = null) {
 
 function get_user_entities_as_rows() {
   global $CONFIG;
-
   return get_data("SELECT * from {$CONFIG->dbprefix}users_entity");
 }
+*/

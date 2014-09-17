@@ -3,7 +3,7 @@
   <name>Localbox</name>
   <author>Bart Jeukendrup</author>
   <version>0.1</version>
-  <description>User and group synchronisation for Localbox.</description>
+  <description>User and group synchronisation between Pleio en Localbox.</description>
   <website>http://www.bartj.com/</website>
   <repository>https://github.com/bart-j/elgg-lox/</repository>
   <bugtracker>https://github.com/bart-j/elgg-lox/issues</bugtracker>
