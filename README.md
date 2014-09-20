@@ -4,8 +4,7 @@ This plugin offers synchronisation of users, groups and subsites to Localbox thr
 
 Installation
 ------------
-1. Make sure php5*-amqp is installed.
-2. Enable the plugin localbox, and make sure the plugin is also enabled for all subsites.
-3. Use the script to provision a full update.
+1. Enable the plugin localbox, and make sure the plugin is also enabled for all subsites.
+2. Use the script to provision a full update.
 
 Now the plugin automatically sends all deltas into RabbitMQ. Use the Pleio bundle in Localbox to process the queue.
