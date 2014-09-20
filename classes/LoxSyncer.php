@@ -12,7 +12,7 @@ class LoxSyncer {
     $this->channel = new LoxAMQPChannel();
   }
 
-  public function updateUser(ElggUser $user) {
+  public function updateUser($user) {
     $data = array(
       'type' => 'user',
       'guid' => $user->username . '@www.pleio.nl',
@@ -34,7 +34,7 @@ class LoxSyncer {
     return $this->channel->publishMessage(json_encode($data));
   }
 
-  public function updateGroup(ElggEntity $entity) {
+  public function updateGroup($entity) {
     
     if ($entity instanceof ElggGroup) {
       $site = get_entity($entity->site_guid);
@@ -53,7 +53,7 @@ class LoxSyncer {
     return $this->channel->publishMessage(json_encode($data));    
   }
 
-  public function deleteGroup(ElggEntity $entity) {
+  public function deleteGroup($entity) {
 
     $data = array(
       'type' => 'group',
@@ -64,7 +64,7 @@ class LoxSyncer {
     return $this->channel->publishMessage(json_encode($data));  
   }
 
-  public function addUserToGroup(ElggUser $user, ElggEntity $group) {
+  public function addUserToGroup($user, $group) {
 
     $data = array( 
       'type' => 'user_group',
@@ -76,7 +76,7 @@ class LoxSyncer {
     return $this->channel->publishMessage(json_encode($data));  
   }
 
-  public function deleteUserFromGroup(ElggUser $user, ElggEntity $group) {
+  public function deleteUserFromGroup($user, $group) {
 
     $data = array( 
       'type' => 'user_group',
