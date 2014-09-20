@@ -13,6 +13,12 @@
     <type>elgg_release</type>
     <version>1.8.15</version>
   </requires>
+
+  <requires>
+    <type>priority</type>
+    <plugin>subsite_manager</plugin>
+    <priority>after</priority>
+  </requires>
     
   <category>Pleio</category>
   <category>Localbox</category>

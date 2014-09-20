@@ -5,6 +5,9 @@
  * @package Localbox
  */
 
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
 class LoxAMQPChannel {
 
   protected $connection = null;
@@ -12,29 +15,19 @@ class LoxAMQPChannel {
   protected $exchange = null;
 
   public function __construct() {
-    $connection = new AMQPConnection();
-    $connection->setLogin('pleio');
-    $connection->setPassword('cDAb6sFp9oC');
-    $connection->setVhost('localhost');
-    $connection->connect();
-
-    $channel = new AMQPChannel($connection);
-    $exchange = new AMQPExchange($channel);
-
-    $exchange->setName('localbox_queue');
-    $exchange->setType('fanout');
-
-    $this->connection = $connection;
-    $this->channel = $channel;
-    $this->exchange = $exchange;
+    $this->connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+    $this->channel = $this->connection->channel();  
+    $this->channel->queue_declare('localbox', false, true, false, false);
   }
 
   public function __destruct() {
+    $this->channel->close();
     $this->connection->close();
   }
 
-  public function publishMessage($message = array()) {
-    $this->exchange->publish($message, 'localbox');
+  public function publishMessage($data) {
+    $message = new AMQPMessage($data);
+    return $this->channel->basic_publish($message, '', 'localbox');
   }
 
 }
