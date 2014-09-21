@@ -16,7 +16,7 @@ class LoxSyncer {
     $data = array(
       'type' => 'user',
       'guid' => $user->username . '@www.pleio.nl',
-      'name' => $user->name,
+      'name' => html_entity_decode($user->name, ENT_QUOTES),
       'email' => $user->email,
       'action' => 'update'
     );
@@ -46,7 +46,7 @@ class LoxSyncer {
     $data = array(
       'type' => 'group',
       'guid' => $entity->guid,
-      'name' => $name,
+      'name' => html_entity_decode($name, ENT_QUOTES),
       'action' => 'update'
     );
 
