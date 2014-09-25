@@ -13,7 +13,7 @@ class LoxSyncer {
   }
 
   public function updateUser($user) {
-    var_dump($user);
+
     $data = array(
       'type' => 'user',
       'guid' => $user->username . '@www.pleio.nl',
@@ -26,6 +26,7 @@ class LoxSyncer {
   }
 
   public function deleteUser(ElggUser $user) {
+    
     $data = array(
       'type' => 'user',
       'guid' => $user->username . '@www.pleio.nl',
