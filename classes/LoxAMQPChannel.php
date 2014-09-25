@@ -15,19 +15,30 @@ class LoxAMQPChannel {
   protected $exchange = null;
 
   public function __construct() {
-    $this->connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
-    $this->channel = $this->connection->channel();  
-    $this->channel->queue_declare('localbox', false, true, false, false);
+    global $CONFIG;
+
+    try {
+      $this->connection = new AMQPConnection($CONFIG->amqp_host, 5672, $CONFIG->amqp_user, $CONFIG->amqp_pass);
+      $this->channel = $this->connection->channel();  
+      $this->channel->queue_declare($CONFIG->amqp_queue, false, true, false, false);
+    } catch (Exception $exception) {
+      $this->connection = false;
+    }
+
   }
 
   public function __destruct() {
-    $this->channel->close();
-    $this->connection->close();
+    if ($this->connection) {
+      $this->channel->close();
+      $this->connection->close();
+    }
   }
 
   public function publishMessage($data) {
-    $message = new AMQPMessage($data);
-    return $this->channel->basic_publish($message, '', 'localbox');
+    if ($this->connection) {
+      $message = new AMQPMessage($data);
+      return $this->channel->basic_publish($message, '', 'localbox');      
+    }
   }
 
 }

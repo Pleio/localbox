@@ -4,6 +4,13 @@ This plugin offers synchronisation of users, groups and subsites to Localbox thr
 
 Installation
 ------------
+1. Configure RabbitMQ parameters in engine/settings.php:
+
+    $CONFIG->amqp_host = 'localhost';
+    $CONFIG->amqp_user = 'guest';
+    $CONFIG->amqp_pass = 'guest';
+    $CONFIG->amqp_queue = 'localbox';
+
 1. Enable the plugin localbox, and make sure the plugin is also enabled for all subsites.
 2. Use the script to provision a full update.
 
