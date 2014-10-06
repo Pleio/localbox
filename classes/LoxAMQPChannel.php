@@ -37,7 +37,7 @@ class LoxAMQPChannel {
   public function publishMessage($data) {
     if ($this->connection) {
       $message = new AMQPMessage($data);
-      return $this->channel->basic_publish($message, '', 'localbox');      
+      return $this->channel->basic_publish($message, '', $CONFIG->amqp_queue);      
     }
   }
 
