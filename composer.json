@@ -1,5 +1,8 @@
 {
+    "name": "localbox",
+    "type": "elgg-plugin",
     "require": {
+        "composer/installers": "~1.0",
         "videlalvaro/php-amqplib": "v2.1.0"
     }
 }
