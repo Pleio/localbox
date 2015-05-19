@@ -26,7 +26,7 @@ class LoxSyncer {
   }
 
   public function deleteUser(ElggUser $user) {
-    
+
     $data = array(
       'type' => 'user',
       'guid' => $user->username . '@www.pleio.nl',
@@ -37,7 +37,7 @@ class LoxSyncer {
   }
 
   public function updateGroup($entity) {
-    
+
     if ($entity instanceof ElggGroup) {
       $site = get_entity($entity->site_guid);
       $name = $site->name . ", " . $entity->name;
@@ -52,7 +52,7 @@ class LoxSyncer {
       'action' => 'update'
     );
 
-    return $this->channel->publishMessage(json_encode($data));    
+    return $this->channel->publishMessage(json_encode($data));
   }
 
   public function deleteGroup($entity) {
@@ -63,31 +63,31 @@ class LoxSyncer {
       'action' => 'delete'
     );
 
-    return $this->channel->publishMessage(json_encode($data));  
+    return $this->channel->publishMessage(json_encode($data));
   }
 
   public function addUserToGroup($user, $group) {
 
-    $data = array( 
+    $data = array(
       'type' => 'user_group',
       'user_guid' => $user->username . '@www.pleio.nl',
       'group_guid' => $group->guid,
       'action' => 'add'
     );
 
-    return $this->channel->publishMessage(json_encode($data));  
+    return $this->channel->publishMessage(json_encode($data));
   }
 
   public function deleteUserFromGroup($user, $group) {
 
-    $data = array( 
+    $data = array(
       'type' => 'user_group',
       'user_guid' => $user->username . '@www.pleio.nl',
       'group_guid' => $group->guid,
       'action' => 'delete'
     );
 
-    return $this->channel->publishMessage(json_encode($data));  
+    return $this->channel->publishMessage(json_encode($data));
   }
 
 }

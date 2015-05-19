@@ -19,8 +19,8 @@ class LoxAMQPChannel {
 
     try {
       $this->connection = new AMQPConnection($CONFIG->amqp_host, 5672, $CONFIG->amqp_user, $CONFIG->amqp_pass, $CONFIG->amqp_vhost);
-      $this->channel = $this->connection->channel();  
-      $this->channel->queue_declare($CONFIG->amqp_queue, false, true, false, false);
+      $this->channel = $this->connection->channel();
+      $this->channel->queue_declare($CONFIG->amqp_lox_queue, false, true, false, false);
     } catch (Exception $exception) {
       $this->connection = false;
     }
@@ -37,7 +37,7 @@ class LoxAMQPChannel {
   public function publishMessage($data) {
     if ($this->connection) {
       $message = new AMQPMessage($data);
-      return $this->channel->basic_publish($message, '', $CONFIG->amqp_queue);      
+      return $this->channel->basic_publish($message, '', $CONFIG->amqp_queue);
     }
   }
 

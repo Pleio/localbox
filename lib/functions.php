@@ -40,7 +40,7 @@ function localbox_compare_users($elggUser, $localboxUser) {
 }
 
 function localbox_create_user(ElggUser $user) {
-  
+
   $content = array(
     'username' => $user->username,
     'realname' => $user->name,

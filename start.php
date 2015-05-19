@@ -7,7 +7,8 @@
   * @link http://www.infty.io/
   */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once(dirname(__FILE__) . "/../../vendor/autoload.php");
+
 require_once(dirname(__FILE__) . "/lib/functions.php");
 require_once(dirname(__FILE__) . "/lib/cron.php");
 require_once(dirname(__FILE__) . "/lib/events.php");
@@ -39,5 +40,5 @@ function localbox_init() {
   elgg_register_event_handler("delete", "member", "localbox_leave_group_event_handler", 100);
 
 }
- 
+
 elgg_register_event_handler('init', 'system', 'localbox_init');
