@@ -12,7 +12,6 @@ class LoxAMQPChannel {
 
   protected $connection = null;
   protected $channel = null;
-  protected $exchange = null;
 
   public function __construct() {
     global $CONFIG;
@@ -35,9 +34,10 @@ class LoxAMQPChannel {
   }
 
   public function publishMessage($data) {
+    global $CONFIG;
     if ($this->connection) {
       $message = new AMQPMessage($data);
-      return $this->channel->basic_publish($message, '', $CONFIG->amqp_queue);
+      return $this->channel->basic_publish($message, '', $CONFIG->amqp_lox_queue);
     }
   }
 
