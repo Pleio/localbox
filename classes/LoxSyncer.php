@@ -6,10 +6,21 @@
  */
 
 class LoxSyncer {
+
+  public static $instance;
   protected $channel = null;
 
   public function __construct() {
+    self::$instance = $this;
+
     $this->channel = new LoxAMQPChannel();
+  }
+
+  public static function get() {
+      if (self::$instance === null) {
+          self::$instance = new self();
+      }
+      return self::$instance;
   }
 
   public function updateUser($user) {
