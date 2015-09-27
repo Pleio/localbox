@@ -122,8 +122,6 @@ function localbox_api_page_handler($url) {
 
     $api = new LoxJSONApi();
 
-    error_log(implode($url, '/'));
-
     switch ($url[0]) {
         case "files":
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {

@@ -173,12 +173,6 @@ class LoxJSONApi {
     }
 
     public function move($from_container_guid, $from_path = array(), $to_container_guid, $to_path = array()) {
-
-        error_log($from_container_guid);
-        error_log(print_r($from_path, true));
-        error_log($to_container_guid);
-        error_log(print_r($to_path, true));
-
         $browser = new ElggFileBrowser($from_container_guid);
 
         if ($browser->move($from_path, $to_container_guid, $to_path)) {
