@@ -95,6 +95,11 @@ function localbox_register_app_handler($url) {
     return $api->getRegisterApp();
 }
 
+function localbox_parse_path($path) {
+    $path = str_replace('//','/', $path);
+    return array_slice(explode('/', $path), 1);
+}
+
 function localbox_api_page_handler($url) {
     $interface = new LoxOAuth2Interface();
     $server = $interface->getServer();
@@ -117,22 +122,52 @@ function localbox_api_page_handler($url) {
 
     $api = new LoxJSONApi();
 
+    error_log(implode($url, '/'));
+
     switch ($url[0]) {
         case "files":
-            // @todo: GET and POST
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $api->getFile($url[1], array_slice($url, 2));
+            } else {
+                $api->createFile($url[1], array_slice($url, 2));
+            }
+
             break;
         case "meta":
-            $api->getMeta(array_slice($url,1));
-            // @todo: GET
+            if (isset($url[1])) {
+                $container_guid = $url[1];
+            } else {
+                $container_guid = 0;
+            }
+
+            $api->getMeta($container_guid, array_slice($url,2));
             break;
         case "operations":
-            // @todo: POST copy (from_path, to_path), POST create_folder (path), POST move (from_path, to_path), POST delete (path)
+
+            if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+                exit;
+            }
+
+            switch ($url[1]) {
+                case "create_folder":
+                    $path = localbox_parse_path(get_input('path'));
+                    $api->createFolder($path[0], array_slice($path, 1));
+                    break;
+                case "move":
+                    $from_path = localbox_parse_path(get_input('from_path'));
+                    $to_path = localbox_parse_path(get_input('to_path'));
+                    $api->move($from_path[0], array_slice($from_path, 1), $to_path[0], array_slice($to_path, 1));
+                case "delete":
+                    $path = localbox_parse_path(get_input('path'));
+                    $api->delete($path[0], array_slice($path, 1));
+            }
             break;
         case "invitations":
             $api->getInvitations();
             break;
         case "user":
             $api->getUser();
+            break;
     }
 
     return true;

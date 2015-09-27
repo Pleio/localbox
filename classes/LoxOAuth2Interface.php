@@ -18,6 +18,8 @@ class LoxOAuth2Interface {
         ));
 
         $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
+        $server->addGrantType(new OAuth2\GrantType\RefreshToken($storage));
+
         $this->server = $server;
     }
 
